@@ -55,6 +55,7 @@ Plug 'rainerborene/vim-reek'
 Plug 'inkarkat/vim-spellcheck'
 Plug 'inkarkat/vim-ingo-library'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-test/vim-test'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -114,7 +115,6 @@ Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-projectionist'
-Plug 'thoughtbot/vim-rspec'
 Plug 'ecomba/vim-ruby-refactoring'
 
 " rust
@@ -559,11 +559,12 @@ let g:tagbar_type_ruby = {
     \ ]
 \ }
 
-" RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+" vim-test mappings
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
 
 " For ruby refactory
 if has('nvim')
