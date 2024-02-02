@@ -657,3 +657,4 @@ augroup lsp_install
 augroup END
 
 nnoremap <Leader>f :Buffers<CR>
+nnoremap <Leader>tf :execute 'GFiles *' . expand('%:t:r') . '_spec.rb' . ' *' . expand('%:t:r') . '_test.rb'<CR>
