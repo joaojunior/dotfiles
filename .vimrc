@@ -504,6 +504,13 @@ augroup vimrc-javascript
   autocmd FileType javascript set tabstop=4|set shiftwidth=4|set expandtab softtabstop=4
 augroup END
 
+" vim-typescript
+augroup vimrc-typescript
+  autocmd!
+  autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
+  autocmd FileType typescript set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2
+augroup END
+
 " python
 " vim-python
 augroup vimrc-python
