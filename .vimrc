@@ -57,6 +57,7 @@ Plug 'inkarkat/vim-ingo-library'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'vimwiki/vimwiki'
 if !has('nvim') | Plug 'rhysd/vim-healthcheck' | endif
 
 if isdirectory('/usr/local/opt/fzf')
@@ -658,3 +659,7 @@ augroup END
 
 nnoremap <Leader>f :Buffers<CR>
 nnoremap <Leader>tf :execute 'GFiles *' . expand('%:t:r') . '_spec.rb' . ' *' . expand('%:t:r') . '_test.rb'<CR>
+
+
+let g:vimwiki_list = [{'path': '~/src/github.com/shopify_related/wiki', 'syntax': 'markdown', 'ext': 'md'}]
+let g:vimwiki_global_ext = 0
