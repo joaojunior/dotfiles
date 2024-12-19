@@ -641,6 +641,18 @@ if executable('ruby-lsp')
         \ 'cmd': {server_info->['ruby-lsp']},
         \ 'whitelist': ['ruby'],
         \ })
+
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'ruby-rubocop',
+        \ 'cmd': {server_info->['rubocop', '--lsp']},
+        \ 'allowlist': ['ruby'],
+        \ })
+
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'ruby-sorbet',
+        \ 'cmd': {server_info->['bundle', 'exec', 'srb', 'tc', '--lsp']},
+        \ 'allowlist': ['ruby'],
+        \ })
 endif
 
 function! s:on_lsp_buffer_enabled() abort
