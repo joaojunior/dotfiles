@@ -63,6 +63,7 @@ Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'kristijanhusak/vim-dadbod-completion'
 Plug 'rhysd/vim-healthcheck'
+Plug 'github/copilot.vim'
 Plug 'dense-analysis/ale'
 
 let g:ale_enabled = 0
