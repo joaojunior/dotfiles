@@ -707,3 +707,27 @@ inoremap <silent><expr> <Tab>
 
 " use Shift-TAB to go to previous option
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+augroup LspVale
+    autocmd!
+
+    let g:vale_ini_path = expand("~/.vale.ini")
+    if filereadable(g:vale_ini_path)
+        "We need to install vale: brew install vale
+        autocmd FileType markdown setlocal makeprg=vale\ --output=line\ % errorformat=%f:%l:%c:%o:%m
+        autocmd QuickFixCmdPost [^l]* cwindow
+        nnoremap <Leader>M :make<CR><CR>
+    end
+
+    " We need to download and setup the vale lsp server: https://github.com/errata-ai/vale-ls/releases
+    let g:vale_lsp_server_path = '/Users/joaojunior/Downloads/vale-ls-0.3.8/target/debug/vale-ls'
+
+    if executable(g:vale_lsp_server_path)
+        autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'vale',
+        \ 'cmd': {server_info->[g:vale_lsp_server_path]},
+        \ 'whitelist': ['markdown', 'text', 'md'],
+        \ 'root_uri': {server_info->lsp#utils#path_to_uri(g:vale_ini_path[:-1])},
+        \ })
+    endif
+augroup END
