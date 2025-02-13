@@ -63,6 +63,10 @@ Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'kristijanhusak/vim-dadbod-completion'
 Plug 'rhysd/vim-healthcheck'
+Plug 'dense-analysis/ale'
+
+let g:ale_enabled = 0
+
 if !has('nvim') | Plug 'rhysd/vim-healthcheck' | endif
 
 if isdirectory('/usr/local/opt/fzf')
@@ -710,6 +714,8 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 augroup LspVale
     autocmd!
+    "Using ALEToggle to enable ALE, we need to install the languagetool: brew install languagetool
+    autocmd VimEnter * ALEToggle
 
     let g:vale_ini_path = expand("~/.vale.ini")
     if filereadable(g:vale_ini_path)
