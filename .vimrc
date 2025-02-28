@@ -425,6 +425,7 @@ endif
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
+nnoremap <Leader>tf :execute 'GFiles *' . expand('%:t:r') . '_spec.rb' . ' *' . expand('%:t:r') . '_test.rb'<CR>
 
 " snippets
 let g:UltiSnipsExpandTrigger="<tab-s>"
@@ -691,10 +692,6 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
-
-nnoremap <Leader>f :Buffers<CR>
-nnoremap <Leader>tf :execute 'GFiles *' . expand('%:t:r') . '_spec.rb' . ' *' . expand('%:t:r') . '_test.rb'<CR>
-
 
 let g:vimwiki_list = [{'path': '~/src/github.com/shopify_related/wiki', 'syntax': 'markdown', 'ext': 'md'}]
 let g:vimwiki_global_ext = 0
