@@ -54,9 +54,6 @@ Plug 'rainerborene/vim-reek'
 Plug 'inkarkat/vim-spellcheck'
 Plug 'vim-test/vim-test'
 Plug 'inkarkat/vim-ingo-library'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-dadbod'
@@ -66,7 +63,8 @@ Plug 'rhysd/vim-healthcheck'
 Plug 'github/copilot.vim'
 Plug 'dense-analysis/ale'
 
-let g:ale_enabled = 0
+let g:ale_enabled = 1
+let g:ale_disable_lsp = 1
 
 if !has('nvim') | Plug 'rhysd/vim-healthcheck' | endif
 
@@ -630,68 +628,18 @@ else
     set clipboard=unnamedplus
 endif
 
-let g:lsp_log_verbose = 1
-let g:lsp_log_file = expand('~/vim-lsp.log')
-
-" for asyncomplete.vim log
-let g:asyncomplete_log_file = expand('~/asyncomplete.log')
-
-if executable('pylsp')
-    " pip install python-lsp-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pylsp',
-        \ 'cmd': {server_info->['pylsp']},
-        \ 'allowlist': ['python'],
-        \ })
-endif
-
-if executable('ruby-lsp')
-    " gem install ruby-lsp
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'ruby-lsp',
-        \ 'cmd': {server_info->['ruby-lsp']},
-        \ 'whitelist': ['ruby'],
-        \ })
-
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'ruby-rubocop',
-        \ 'cmd': {server_info->['rubocop', '--lsp']},
-        \ 'allowlist': ['ruby'],
-        \ })
-
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'ruby-sorbet',
-        \ 'cmd': {server_info->['bundle', 'exec', 'srb', 'tc', '--lsp']},
-        \ 'allowlist': ['ruby'],
-        \ })
-endif
-
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> ld <plug>(lsp-definition)
-    nmap <buffer> ls <plug>(lsp-document-symbol-search)
-    nmap <buffer> lS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> lr <plug>(lsp-references)
-    nmap <buffer> li <plug>(lsp-implementation)
-    nmap <buffer> lt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>lr <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
-
-    let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rb,*.rs,*.go call execute('LspDocumentFormatSync')
-endfunction
-
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+nmap <buffer> ld <plug>(coc-definition)
+nmap <buffer> ls <plug>(coc-document-symbol-search)
+nmap <buffer> lS <plug>(coc-workspace-symbol-search)
+nmap <buffer> lr <plug>(coc-references)
+nmap <buffer> li <plug>(coc-implementation)
+nmap <buffer> lt <plug>(coc-type-definition)
+nmap <buffer> <leader>lr <plug>(coc-rename)
+nmap <buffer> [g <plug>(coc-previous-diagnostic)
+nmap <buffer> ]g <plug>(coc-next-diagnostic)
+nmap <buffer> K <plug>(coc-hover)
+nnoremap <buffer> <expr><c-f> coc#scroll(+4)
+nnoremap <buffer> <expr><c-d> coc#scroll(-4)
 
 let g:vimwiki_list = [{'path': '~/src/github.com/shopify_related/wiki', 'syntax': 'markdown', 'ext': 'md'}]
 let g:vimwiki_global_ext = 0
@@ -712,9 +660,6 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 augroup LspVale
     autocmd!
-    "Using ALEToggle to enable ALE, we need to install the languagetool: brew install languagetool
-    autocmd VimEnter * ALEToggle
-
     let g:vale_ini_path = expand("~/.vale.ini")
     if filereadable(g:vale_ini_path)
         "We need to install vale: brew install vale
@@ -722,16 +667,4 @@ augroup LspVale
         autocmd QuickFixCmdPost [^l]* cwindow
         nnoremap <Leader>M :make<CR><CR>
     end
-
-    " We need to download and setup the vale lsp server: https://github.com/errata-ai/vale-ls/releases
-    let g:vale_lsp_server_path = '/Users/joaojunior/Downloads/vale-ls-0.3.8/target/debug/vale-ls'
-
-    if executable(g:vale_lsp_server_path)
-        autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'vale',
-        \ 'cmd': {server_info->[g:vale_lsp_server_path]},
-        \ 'whitelist': ['markdown', 'text', 'md'],
-        \ 'root_uri': {server_info->lsp#utils#path_to_uri(g:vale_ini_path[:-1])},
-        \ })
-    endif
 augroup END
