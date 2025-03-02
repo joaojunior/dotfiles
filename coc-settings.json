@@ -1,0 +1,28 @@
+{
+    "diagnostic.displayByAle": true,
+    "languageserver": {
+        "pylsp": {
+        "command": "pylsp",
+        "filetypes": ["python"]
+        },
+        "ruby-lsp": {
+          "command": "ruby-lsp",
+          "filetypes": ["ruby"]
+        },
+        "ruby-rubocop": {
+          "command": "bundle",
+          "args": ["exec", "rubocop","--lsp"],
+          "filetypes": ["ruby"]
+        },
+        "ruby-sorbet": {
+          "command": "bundle",
+          "args": ["exec", "srb", "tc", "--lsp"],
+          "filetypes": ["ruby"]
+        },
+        "vale": {
+            "command": "$HOME/Downloads/vale-ls-0.3.8/target/debug/vale-ls",
+            "filetypes": ["markdown", "text", "md"],
+            "rootPatterns": [".vale.ini"]
+        }
+    }
+}
