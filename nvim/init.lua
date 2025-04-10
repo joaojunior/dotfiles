@@ -5,7 +5,6 @@ require("config.shortcuts")
 
 vim.g.mapleader = ","
 
-vim.cmd.colorscheme "catppuccin-latte"
 vim.o.shell = os.getenv("SHELL") or "/bin/sh"
 
 vim.cmd("set modifiable")
