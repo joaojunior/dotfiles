@@ -8,6 +8,7 @@ vim.g.mapleader = ","
 vim.cmd.colorscheme "catppuccin-latte"
 vim.o.shell = os.getenv("SHELL") or "/bin/sh"
 
+vim.cmd("set modifiable")
 vim.cmd("set spell spelllang=en_us")
 vim.cmd("set encoding=utf-8")
 vim.cmd("set fileencoding=utf-8")

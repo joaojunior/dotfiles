@@ -23,3 +23,5 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   checker = { enabled = true },
 })
+
+require('gitsigns').setup()
